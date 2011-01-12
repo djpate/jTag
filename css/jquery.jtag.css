@@ -12,13 +12,33 @@
 }
 
 .jTagSave{
-	background-color:red;
 	position: absolute;
 	top: 0px;
-	right: 0px;
-	cursor: pointer;
-	
+	width:100%;
 }
+
+.jTagSave input{
+	border:1px solid black;
+	width:60px;
+	float:left;
+}
+
+.jTagSaveClose{
+	cursor:pointer;
+	float:left;
+	width:20px;
+	height:20px;
+	background: url('../images/cancel.png') no-repeat;
+}
+
+.jTagSaveBtn{
+	cursor:pointer;
+	float:left;
+	width:20px;
+	height:20px;
+	background: url('../images/save.png') no-repeat;
+}
+
 
 .jTagTag{
 	position:absolute;
@@ -26,7 +46,7 @@
 }
 
 .jTagTag span{
-	width:100px;
+	width:100%;
 	background-color:black;
 	color:#fff;
 	height:20px;
@@ -40,8 +60,8 @@
 /* jquery ui css needed for the drag */
 
 .ui-icon {
-	width: 16px;
-	height: 16px;
+	width: 20px;
+	height: 20px;
 }
 
 .ui-resizable-se {
@@ -49,4 +69,5 @@
 	right: 0px;
 	position: absolute;
 	cursor: SE-resize;
+	background: url('../images/resize.png') no-repeat;
 }
