@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js'></script>
+		<script type='text/javascript' src='js/jquery.tag.js'></script>
+		<link media="screen" rel="stylesheet" href="css/jquery.jtag.css" type="text/css" />
+	</head>
+	<body>
+		<img src="http://www.astrosurf.com/saf/articles/APPL/procede_fichiers/image002.jpg" class="tagMe" />
+		<button id="enable">Enable tag</button>
+		<script>
+			$(document).ready(function(){
+				$(".tagMe").tag();
+				
+				$("#enable").click(function(){
+					$(".tagMe").showDrag();
+				});
+			});
+			
+		</script>
+	</body>
+</html>

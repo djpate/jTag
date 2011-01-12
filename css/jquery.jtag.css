@@ -1,0 +1,52 @@
+.jTagArea{
+	position:relative;
+}
+
+.jTagDrag{
+	position:absolute;
+	top:0px;
+	width:100px;
+	height:100px;
+	border:2px dashed black;
+	cursor: move;
+}
+
+.jTagSave{
+	background-color:red;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	cursor: pointer;
+	
+}
+
+.jTagTag{
+	position:absolute;
+	border:2px solid black;
+}
+
+.jTagTag span{
+	width:100px;
+	background-color:black;
+	color:#fff;
+	height:20px;
+	position: absolute;
+	bottom: 0px;
+	text-align: center;
+	font-size: 10px;
+	line-height:20px;
+}
+
+/* jquery ui css needed for the drag */
+
+.ui-icon {
+	width: 16px;
+	height: 16px;
+}
+
+.ui-resizable-se {
+	bottom: 0px;
+	right: 0px;
+	position: absolute;
+	cursor: SE-resize;
+}
