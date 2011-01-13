@@ -100,7 +100,10 @@
 				maxWidht: options.maxWidth,
 				maxHeight: options.maxHeight,
 				resize: function(){
-					value = "-"+$(".jTagDrag").attr('offsetLeft')+"px -"+$(".jTagDrag").attr('offsetTop')+"px";
+					border = parseInt($(".jTagDrag").css('borderTopWidth'));
+					left = parseInt($(".jTagDrag").attr('offsetLeft')) + border;
+					top = parseInt($(".jTagDrag").attr('offsetTop')) + border;
+					value = "-"+left+"px -"+top+"px";
 					$(".jTagDrag").css({backgroundPosition: value});
 				}
 			
@@ -109,8 +112,9 @@
 			$(".jTagDrag").draggable({
 				containment: 'parent',
 				drag: function(){
-					left = parseInt($(".jTagDrag").attr('offsetLeft')) + 2;
-					top = parseInt($(".jTagDrag").attr('offsetTop')) + 2;
+					border = parseInt($(".jTagDrag").css('borderTopWidth'));
+					left = parseInt($(".jTagDrag").attr('offsetLeft')) + border;
+					top = parseInt($(".jTagDrag").attr('offsetTop')) + border;
 					value = "-"+left+"px -"+top+"px";
 					$(".jTagDrag").css({backgroundPosition: value});
 				}
