@@ -1,11 +1,8 @@
 .jTagArea{
-	position:relative;
+	/*position:relative;*/
 }
 
 .jTagDrag{
-	z-index:1000;
-	position:absolute !important;
-	top:0px;
 	width:100px;
 	height:100px;
 	border:1px dashed black;

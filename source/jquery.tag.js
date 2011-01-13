@@ -28,52 +28,60 @@
 				
 				obj.data("options",options);
 				
-				obj.wrap('<div class="jTagArea" />');
-				
-				$(this).parent().width(obj.width());
-				$(this).parent().height(obj.height());
-				
-				if(options.autoShowDrag){
+				$(window).load(function(){
+					
+					obj.wrap('<div class="jTagArea" />');
+					
+					obj.parent().css("backgroundImage","url("+obj.attr('src')+")");
+					
+					obj.parent().width(obj.width());
+					obj.parent().height(obj.height());
+					
+					obj.hide();
+					
+					if(options.autoShowDrag){
 					obj.showDrag();
-				}
-				
-				$(".jTagTag").live('hover',function(){
-					if($(".jTagDrag").length===0){
-						$(this).css({opacity: 1});
-						obj.parent().unbind('mousedown');
 					}
-				});
 				
-				$(".jTagTag").live('mouseleave',function(){
-					if($(".jTagDrag").length===0){
-						$(this).css({opacity: 0});
-						obj.enableClickToTag();
-					}
-				});
-				
-				if(options.canDelete){
-				
-					$('.jTagDeleteTag').live('click',function(){
-						
-						if(options.remove){
-							options.remove($(this).parent().getId());
+					$(".jTagTag").live('hover',function(){
+						if($(".jTagDrag").length===0){
+							$(this).css({opacity: 1});
+							obj.parent().unbind('mousedown');
 						}
-						
-						obj.enableClickToTag();
-						
-						$(this).parent().remove();
-						
 					});
-				
-				}
-				
-				if(options.defaultTags){
-					$.each(options.defaultTags, function (index,value){
-						obj.addTag(value.width,value.height,value.top,value.left,value.label,value.id);
+					
+					$(".jTagTag").live('mouseleave',function(){
+						if($(".jTagDrag").length===0){
+							$(this).css({opacity: 0});
+							obj.enableClickToTag();
+						}
 					});
-				}
-				
-				obj.enableClickToTag();
+					
+					if(options.canDelete){
+					
+						$('.jTagDeleteTag').live('click',function(){
+							
+							if(options.remove){
+								options.remove($(this).parent().getId());
+							}
+							
+							obj.enableClickToTag();
+							
+							$(this).parent().remove();
+							
+						});
+					
+					}
+					
+					if(options.defaultTags){
+						$.each(options.defaultTags, function (index,value){
+							obj.addTag(value.width,value.height,value.top,value.left,value.label,value.id);
+						});
+					}
+					
+					obj.enableClickToTag();
+						
+				});
 			
 			});
 		},
