@@ -4,7 +4,7 @@
 
 .jTagDrag{
 	z-index:1000;
-	position:absolute;
+	position:absolute !important;
 	top:0px;
 	width:100px;
 	height:100px;
@@ -77,6 +77,8 @@
 
 /* jquery ui css needed for the drag */
 
+/*
+
 .ui-icon {
 	width: 20px;
 	height: 20px;
@@ -89,3 +91,5 @@
 	cursor: SE-resize;
 	background: url('../images/resize.png') no-repeat;
 }
+
+*/

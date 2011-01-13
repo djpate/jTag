@@ -14,7 +14,11 @@
 				save : null,
 				remove: null,
 				autoShowDrag: false,
-				autoCompleteValues: null
+				autoComplete: null,
+				defaultTags:[
+					{id: 56,label: 'Mon label',height: 100, width: 100, top: 20, left: 30},
+					{id: 5,label: 'Mon label deux',height: 100, width: 100, top: 100, left: 40}
+				]
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -50,14 +54,21 @@
 				
 					$('.jTagDeleteTag').live('click',function(){
 						
-						$(this).parent().remove();
-						
 						if(options.remove){
-							options.remove.call($(this).data('id'));
+							console.log($(this).parent().html());
+							options.remove($(this).parent().getId());
 						}
+						
+						$(this).parent().remove();
 						
 					});
 				
+				}
+				
+				if(options.defaultTags){
+					$.each(options.defaultTags, function (index,value){
+						obj.addTag(value.width,value.height,value.top,value.left,value.label,value.id);
+					});
 				}
 			
 			});
@@ -82,16 +93,17 @@
 			
 			obj.css({opacity: .4});
 					
-			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
+			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
 			
-			if(options.autoCompleteValues){
-				input = $(".jTagInput input").autocomplete({
+			if(options.autoComplete){
+				$("#jTagLabel").autocomplete({
+					source: options.autoComplete
 				});
 			}
 			
 			$(".jTagSaveBtn").click(function(){
 				
-				label = $(this).prev().prev().find("input").val();
+				label = $("#jTagLabel").val();
 				
 				if(label==''){
 					alert('The label cannot be empty');
@@ -103,10 +115,10 @@
 				top = $(this).parent().parent().attr('offsetTop');
 				left = $(this).parent().parent().attr('offsetLeft');
 				
-				obj.addTag(width,height,top,left,label);
+				tagobj = obj.addTag(width,height,top,left,label);
 				
 				if(options.save){
-					options.save(width,height,top,left,label);
+					options.save(width,height,top,left,label,tag);
 				}
 				
 			});
@@ -150,7 +162,12 @@
 			
 			var options = obj.data('options');
 			
-			$('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>').insertAfter(obj).data('id',id);
+			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>')
+						.insertAfter(obj);
+			
+			if(id){
+				tag.setId(id);
+			}
 			
 			if(options.canDelete){
 				obj.parent().find(".jTagDeleteTag").show();
@@ -158,6 +175,22 @@
 			
 			$(".jTagDrag").remove();
 			
+			return tag;
+			
+		},
+		setId: function(id){
+			if($(this).hasClass("jTagTag")){
+				$(this).data("tagid",id);
+			} else {
+				alert('Wrong object');
+			}
+		},
+		getId: function(id){
+			if($(this).hasClass("jTagTag")){
+				return $(this).data("tagid");
+			} else {
+				alert('Wrong object');
+			}
 		}
 	});
 })(jQuery);
