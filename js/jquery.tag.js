@@ -13,7 +13,8 @@
 				maxWidth : null,
 				save : null,
 				remove: null,
-				autoShowDrag: false
+				autoShowDrag: false,
+				autoCompleteValues: null
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -57,14 +58,21 @@
 					
 			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
 			
-			$(".jTagSaveBtn").click(function(){
+			if(options.autoCompleteValues){
+				input = $(".jTagInput input").autocomplete({
+					
+				});
+			}
 			
-				if($(this).prev().prev().find("input").val()==''){
+			$(".jTagSaveBtn").click(function(){
+				
+				label = $(this).prev().prev().find("input").val();
+				
+				if(label==''){
 					alert('The label cannot be empty');
 					return;
 				}
 				
-				label = $(this).prev().prev().find("input").val();
 				height = $(this).parent().parent().height();
 				width = $(this).parent().parent().width();
 				top = $(this).parent().parent().attr('offsetTop');
