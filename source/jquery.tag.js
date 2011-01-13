@@ -32,6 +32,8 @@
 					
 					obj.wrap('<div class="jTagArea" />');
 					
+					$('<div class="jTagOverlay"></div>').insertBefore(obj);
+					
 					obj.parent().css("backgroundImage","url("+obj.attr('src')+")");
 					
 					obj.parent().width(obj.width());
@@ -90,11 +92,11 @@
 			
 			var options = obj.data('options');
 			
-			obj.css({opacity: 1});
+			$(".jTagOverlay").css("backgroundColor","");
 			
-			obj.siblings(".jTagDrag").remove();
+			$(".jTagDrag").remove();
 			
-			$(".jTagTag",obj).show();
+			$(".jTagTag").show();
 			
 			obj.enableClickToTag();
 			
@@ -109,19 +111,19 @@
 			
 			var position = function(){
 				border = parseInt($(".jTagDrag").css('borderTopWidth'));
-				left = parseInt($(".jTagDrag").attr('offsetLeft')) + border;
-				top = parseInt($(".jTagDrag").attr('offsetTop')) + border;
-				return "-"+left+"px -"+top+"px";
+				left_pos = parseInt($(".jTagDrag").attr('offsetLeft')) + border - 8;
+				top_pos = parseInt($(".jTagDrag").attr('offsetTop')) + border - 8;
+				return "-"+left_pos+"px -"+top_pos+"px";
 			}
 			
-			if(obj.siblings(".jTagDrag").length==1){
+			if($(".jTagDrag").length==1){
 				alert("You're allready tagging someone");
 				return;
 			}
-			
-			obj.css({opacity: options.opacity });
 					
-			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
+			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo($(".jTagOverlay"));
+			
+			$(".jTagOverlay").css("backgroundColor","rgba(200, 54, 54, 0.5)");
 			
 			$(".jTagDrag").css("backgroundImage","url("+obj.attr('src')+")");
 			
@@ -136,11 +138,16 @@
 				if(y + $(".jTagDrag").height() > obj.parent().height()){
 					y = obj.parent().height() - $(".jTagDrag").height() - 2;
 				}
+
+			} else {
 				
-				$(".jTagDrag").css("top",y);
-				$(".jTagDrag").css("left",x);
-				$(".jTagDrag").css({backgroundPosition: position()});
+				x = 0;
+				y = 0;
+				
 			}
+			
+			$(".jTagDrag").css("top",y)
+						  .css("left",x);
 			
 			
 			if(options.autoComplete){
@@ -198,6 +205,7 @@
 					$(".jTagDrag").css({backgroundPosition: position()});
 				}
 			});
+			$(".jTagDrag").css({backgroundPosition: position()});
 		},
 		addTag: function(width,height,top,left,label,id){
 			
