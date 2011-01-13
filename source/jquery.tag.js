@@ -91,7 +91,7 @@
 			obj.enableClickToTag();
 			
 		},
-		showDrag: function(){
+		showDrag: function(e){
 
 			obj = $(this);
 			
@@ -116,6 +116,24 @@
 			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
 			
 			$(".jTagDrag").css("backgroundImage","url("+obj.attr('src')+")");
+			
+			if(e){
+				x = e.pageX - obj.attr('offsetLeft');
+				y = e.pageY - obj.attr('offsetTop');
+				
+				if(x + $(".jTagDrag").width() > obj.parent().width()){
+					x = obj.parent().width() - $(".jTagDrag").width() - 2;
+				}
+				
+				if(y + $(".jTagDrag").height() > obj.parent().height()){
+					y = obj.parent().height() - $(".jTagDrag").height() - 2;
+				}
+				
+				$(".jTagDrag").css("top",y);
+				$(".jTagDrag").css("left",x);
+				$(".jTagDrag").css({backgroundPosition: position()});
+			}
+			
 			
 			if(options.autoComplete){
 				$("#jTagLabel").autocomplete({
@@ -218,8 +236,8 @@
 			
 			if(options.clickToTag){
 				
-				obj.parent().mousedown(function(){
-					obj.showDrag();
+				obj.parent().mousedown(function(e){
+					obj.showDrag(e);
 					obj.parent().unbind('mousedown');
 				});
 			}
