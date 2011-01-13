@@ -10,7 +10,6 @@
 	height:100px;
 	border:1px dashed black;
 	cursor: move;
-	background-image: url(http://www.concurringopinions.com/archives/images/family.jpg);
 }
 
 .jTagInput{
@@ -19,6 +18,7 @@
 
 .jTagSave{
 	width:100%;
+	background: black;
 }
 
 .jTagInput input{
@@ -40,8 +40,9 @@
 	display: none;
 	cursor: pointer;
 	position: absolute;
-	top: 0px;
+	bottom: 0px;
 	right: 0px;
+	z-index:5;
 	width: 20px;
 	height: 20px;
 	background: url('../images/cancel.png') no-repeat;
@@ -74,22 +75,3 @@
 	font-size: 10px;
 	line-height:20px;
 }
-
-/* jquery ui css needed for the drag */
-
-/*
-
-.ui-icon {
-	width: 20px;
-	height: 20px;
-}
-
-.ui-resizable-se {
-	bottom: 0px;
-	right: 0px;
-	position: absolute;
-	cursor: SE-resize;
-	background: url('../images/resize.png') no-repeat;
-}
-
-*/

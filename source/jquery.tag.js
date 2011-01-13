@@ -15,10 +15,9 @@
 				remove: null,
 				autoShowDrag: false,
 				autoComplete: null,
-				defaultTags:[
-					{id: 56,label: 'Mon label',height: 100, width: 100, top: 20, left: 30},
-					{id: 5,label: 'Mon label deux',height: 100, width: 100, top: 100, left: 40}
-				]
+				defaultTags: null,
+				opacity: .4,
+				clickToTag: true
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -70,13 +69,20 @@
 						obj.addTag(value.width,value.height,value.top,value.left,value.label,value.id);
 					});
 				}
+				
+				obj.enableClickToTag();
 			
 			});
 		},
 		hideDrag: function(){
 			obj = $(this);
 			
+			var options = obj.data('options');
+			
+			obj.css({opacity: 1});
+			
 			obj.siblings(".jTagDrag").remove();
+			
 			$(".jTagTag",obj).show();
 			
 		},
@@ -86,14 +92,23 @@
 			
 			var options = obj.data('options');
 			
+			var position = function(){
+				border = parseInt($(".jTagDrag").css('borderTopWidth'));
+				left = parseInt($(".jTagDrag").attr('offsetLeft')) + border;
+				top = parseInt($(".jTagDrag").attr('offsetTop')) + border;
+				return "-"+left+"px -"+top+"px";
+			}
+			
 			if(obj.siblings(".jTagDrag").length==1){
 				alert("You're allready tagging someone");
 				return;
 			}
 			
-			obj.css({opacity: .4});
+			obj.css({opacity: options.opacity });
 					
 			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
+			
+			$(".jTagDrag").css("backgroundImage","url("+obj.attr('src')+")");
 			
 			if(options.autoComplete){
 				$("#jTagLabel").autocomplete({
@@ -121,10 +136,14 @@
 					options.save(width,height,top,left,label,tag);
 				}
 				
+			},function(){
+				obj.enableClickToTag();
 			});
 			
 			$(".jTagSaveClose").click(function(){
 				obj.hideDrag();
+			},function(){
+				obj.enableClickToTag();
 			});
 			
 			$(".jTagDrag").resizable({
@@ -134,23 +153,20 @@
 				maxWidht: options.maxWidth,
 				maxHeight: options.maxHeight,
 				resize: function(){
-					border = parseInt($(".jTagDrag").css('borderTopWidth'));
-					left = parseInt($(".jTagDrag").attr('offsetLeft')) + border;
-					top = parseInt($(".jTagDrag").attr('offsetTop')) + border;
-					value = "-"+left+"px -"+top+"px";
-					$(".jTagDrag").css({backgroundPosition: value});
+					$(".jTagDrag").css({backgroundPosition: position()});
+				},
+				stop: function(){
+					$(".jTagDrag").css({backgroundPosition: position()});
 				}
-			
 			});
 		
 			$(".jTagDrag").draggable({
 				containment: 'parent',
 				drag: function(){
-					border = parseInt($(".jTagDrag").css('borderTopWidth'));
-					left = parseInt($(".jTagDrag").attr('offsetLeft')) + border;
-					top = parseInt($(".jTagDrag").attr('offsetTop')) + border;
-					value = "-"+left+"px -"+top+"px";
-					$(".jTagDrag").css({backgroundPosition: value});
+					$(".jTagDrag").css({backgroundPosition: position()});
+				},
+				stop: function(){
+					$(".jTagDrag").css({backgroundPosition: position()});
 				}
 			});
 		},
@@ -173,7 +189,7 @@
 				obj.parent().find(".jTagDeleteTag").show();
 			}
 			
-			$(".jTagDrag").remove();
+			obj.hideDrag();
 			
 			return tag;
 			
@@ -190,6 +206,18 @@
 				return $(this).data("tagid");
 			} else {
 				alert('Wrong object');
+			}
+		},
+		enableClickToTag: function(){
+			
+			obj = $(this);
+			var options = obj.data('options');
+			
+			if(options.clickToTag){
+				obj.parent().click(function(){
+					obj.showDrag();
+					obj.parent().unbind('click');
+				});
 			}
 		}
 	});
