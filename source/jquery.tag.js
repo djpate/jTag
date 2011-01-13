@@ -16,7 +16,7 @@
 				autoShowDrag: false,
 				autoComplete: null,
 				defaultTags: null,
-				opacity: .4,
+				opacity: 0.4,
 				clickToTag: true
 			};
 			
@@ -38,14 +38,14 @@
 				}
 				
 				$(".jTagTag").live('hover',function(){
-					if($(".jTagDrag").length==0){
+					if($(".jTagDrag").length===0){
 						$(this).css({opacity: 1});
 						obj.parent().unbind('mousedown');
 					}
 				});
 				
 				$(".jTagTag").live('mouseleave',function(){
-					if($(".jTagDrag").length==0){
+					if($(".jTagDrag").length===0){
 						$(this).css({opacity: 0});
 						obj.enableClickToTag();
 					}
