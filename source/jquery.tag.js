@@ -40,12 +40,14 @@
 				$(".jTagTag").live('hover',function(){
 					if($(".jTagDrag").length==0){
 						$(this).css({opacity: 1});
+						obj.parent().unbind('mousedown');
 					}
 				});
 				
 				$(".jTagTag").live('mouseleave',function(){
 					if($(".jTagDrag").length==0){
 						$(this).css({opacity: 0});
+						obj.enableClickToTag();
 					}
 				});
 				
@@ -54,9 +56,10 @@
 					$('.jTagDeleteTag').live('click',function(){
 						
 						if(options.remove){
-							console.log($(this).parent().html());
 							options.remove($(this).parent().getId());
 						}
+						
+						obj.enableClickToTag();
 						
 						$(this).parent().remove();
 						
@@ -85,10 +88,14 @@
 			
 			$(".jTagTag",obj).show();
 			
+			obj.enableClickToTag();
+			
 		},
 		showDrag: function(){
-		
+
 			obj = $(this);
+			
+			obj.parent().unbind('mousedown');
 			
 			var options = obj.data('options');
 			
@@ -136,14 +143,10 @@
 					options.save(width,height,top,left,label,tag);
 				}
 				
-			},function(){
-				obj.enableClickToTag();
 			});
 			
 			$(".jTagSaveClose").click(function(){
 				obj.hideDrag();
-			},function(){
-				obj.enableClickToTag();
 			});
 			
 			$(".jTagDrag").resizable({
@@ -214,9 +217,10 @@
 			var options = obj.data('options');
 			
 			if(options.clickToTag){
-				obj.parent().click(function(){
+				
+				obj.parent().mousedown(function(){
 					obj.showDrag();
-					obj.parent().unbind('click');
+					obj.parent().unbind('mousedown');
 				});
 			}
 		}
