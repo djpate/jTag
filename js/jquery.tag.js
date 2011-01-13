@@ -8,10 +8,12 @@
 				minHeight : 100,
 				defaultWidth : 100,
 				defaultHeight: 100,
+				canDelete: true,
 				maxHeight : null,
 				maxWidth : null,
 				save : null,
-				autoShowDrag: true
+				remove: null,
+				autoShowDrag: false
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -53,16 +55,16 @@
 			
 			$(".jTagTag",obj.parent()).hide();
 					
-			$('<div class="jTagDrag"><div class="jTagSave"><input type="text"><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div></div>').insertAfter(obj);
+			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
 			
 			$(".jTagSaveBtn").click(function(){
 			
-				if($(this).prev().prev().val()==''){
+				if($(this).prev().prev().find("input").val()==''){
 					alert('The label cannot be empty');
 					return;
 				}
 				
-				label = $(this).prev().prev().val();
+				label = $(this).prev().prev().find("input").val();
 				height = $(this).parent().parent().height();
 				width = $(this).parent().parent().width();
 				top = $(this).parent().parent().attr('offsetTop');
@@ -93,7 +95,7 @@
 				containment: 'parent'
 			});
 		},
-		addTag: function(width,height,top,left,label){
+		addTag: function(width,height,top,left,label,id){
 			
 			obj = $(this);
 			
@@ -101,7 +103,21 @@
 			
 			$(".jTagTag",obj.parent()).show();
 			
-			$('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top+'px;left:'+left+'px;"><span>'+label+'</span></div>').insertAfter(obj);
+			$('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>').insertAfter(obj).data('id',id);
+			
+			if(options.canDelete){
+				$('.jTagDeleteTag',obj.parent()).show();
+				
+				$('.jTagDeleteTag').click(function(){
+					$(this).parent().remove();
+					
+					if(options.remove){
+						options.remove.call($(this).data('id'));
+					}
+					
+				});
+			
+			}
 			
 			obj.siblings(".jTagDrag").remove();
 			

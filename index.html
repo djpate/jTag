@@ -6,11 +6,15 @@
 		<link media="screen" rel="stylesheet" href="css/jquery.jtag.css" type="text/css" />
 	</head>
 	<body>
-		<img src="http://www.astrosurf.com/saf/articles/APPL/procede_fichiers/image002.jpg" class="tagMe" />
+		<img src="http://www.concurringopinions.com/archives/images/family.jpg" class="tagMe" />
 		<button id="enable">Tag someone</button>
 		<script>
 			$(document).ready(function(){
-				$(".tagMe").tag();
+				$(".tagMe").tag({
+					remove: function(id){
+						alert(id);
+					}
+				});
 				
 				$("#enable").click(function(){
 					$(".tagMe").showDrag();
