@@ -34,6 +34,14 @@
 					obj.showDrag();
 				}
 				
+				$(".jTagTag").live('hover',function(){
+					$(this).css({opacity: 1});
+				});
+				
+				$(".jTagTag").live('mouseleave',function(){
+					$(this).css({opacity: 0});
+				});
+				
 			});
 		},
 		hideDrag: function(){
@@ -54,11 +62,7 @@
 				return;
 			}
 			
-			obj.find(".jTagOpacity").show();
-			
 			obj.css({opacity: .4});
-			
-			$(".jTagTag",obj.parent()).hide();
 					
 			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
 			
@@ -124,9 +128,9 @@
 			
 			obj = $(this);
 			
-			var options = obj.data('options');
+			obj.css({opacity: 1});
 			
-			$(".jTagTag",obj.parent()).show();
+			var options = obj.data('options');
 			
 			$('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>').insertAfter(obj).data('id',id);
 			

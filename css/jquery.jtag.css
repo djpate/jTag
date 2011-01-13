@@ -57,8 +57,9 @@
 
 
 .jTagTag{
-	position:absolute;
+	opacity:0;
 	border:2px solid black;
+	position:absolute;
 }
 
 .jTagTag span{
