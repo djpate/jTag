@@ -54,13 +54,16 @@
 				return;
 			}
 			
+			obj.find(".jTagOpacity").show();
+			
+			obj.css({opacity: .4});
+			
 			$(".jTagTag",obj.parent()).hide();
 					
 			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').insertAfter(obj);
 			
 			if(options.autoCompleteValues){
 				input = $(".jTagInput input").autocomplete({
-					
 				});
 			}
 			
@@ -95,12 +98,22 @@
 				minWidth: options.minWidth,
 				minHeight: options.minHeight,
 				maxWidht: options.maxWidth,
-				maxHeight: options.maxHeight
+				maxHeight: options.maxHeight,
+				resize: function(){
+					value = "-"+$(".jTagDrag").attr('offsetLeft')+"px -"+$(".jTagDrag").attr('offsetTop')+"px";
+					$(".jTagDrag").css({backgroundPosition: value});
+				}
 			
 			});
 		
 			$(".jTagDrag").draggable({
-				containment: 'parent'
+				containment: 'parent',
+				drag: function(){
+					left = parseInt($(".jTagDrag").attr('offsetLeft')) + 2;
+					top = parseInt($(".jTagDrag").attr('offsetTop')) + 2;
+					value = "-"+left+"px -"+top+"px";
+					$(".jTagDrag").css({backgroundPosition: value});
+				}
 			});
 		},
 		addTag: function(width,height,top,left,label,id){
@@ -117,6 +130,7 @@
 				$('.jTagDeleteTag',obj.parent()).show();
 				
 				$('.jTagDeleteTag').click(function(){
+					
 					$(this).parent().remove();
 					
 					if(options.remove){

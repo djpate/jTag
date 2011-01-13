@@ -9,10 +9,11 @@
 	height:100px;
 	border:2px dashed black;
 	cursor: move;
+	background-image: url(http://www.concurringopinions.com/archives/images/family.jpg);
 }
 
 .jTagInput{
-	float:left;
+	margin-right:42px;
 }
 
 .jTagSave{
@@ -27,10 +28,11 @@
 
 .jTagSaveClose{
 	cursor:pointer;
-	float:left;
+	float: right;
 	width:20px;
 	height:20px;
 	background: url('../images/cancel.png') no-repeat;
+	background-position: center center;
 }
 
 .jTagDeleteTag{
@@ -46,10 +48,11 @@
 
 .jTagSaveBtn{
 	cursor:pointer;
-	float:left;
-	width:20px;
-	height:20px;
+	float: right;
+	width: 20px;
+	height: 20px;
 	background: url('../images/save.png') no-repeat;
+	background-position: center center;
 }
 
 
