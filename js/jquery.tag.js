@@ -46,6 +46,20 @@
 					}
 				});
 				
+				if(options.canDelete){
+				
+					$('.jTagDeleteTag').live('click',function(){
+						
+						$(this).parent().remove();
+						
+						if(options.remove){
+							options.remove.call($(this).data('id'));
+						}
+						
+					});
+				
+				}
+			
 			});
 		},
 		hideDrag: function(){
@@ -139,21 +153,10 @@
 			$('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>').insertAfter(obj).data('id',id);
 			
 			if(options.canDelete){
-				$('.jTagDeleteTag',obj.parent()).show();
-				
-				$('.jTagDeleteTag').click(function(){
-					
-					$(this).parent().remove();
-					
-					if(options.remove){
-						options.remove.call($(this).data('id'));
-					}
-					
-				});
-			
+				obj.parent().find(".jTagDeleteTag").show();
 			}
 			
-			obj.siblings(".jTagDrag").remove();
+			$(".jTagDrag").remove();
 			
 		}
 	});
