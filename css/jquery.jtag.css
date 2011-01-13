@@ -3,6 +3,7 @@
 }
 
 .jTagDrag{
+	z-index:1000;
 	position:absolute;
 	top:0px;
 	width:100px;

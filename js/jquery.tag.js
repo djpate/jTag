@@ -35,11 +35,15 @@
 				}
 				
 				$(".jTagTag").live('hover',function(){
-					$(this).css({opacity: 1});
+					if($(".jTagDrag").length==0){
+						$(this).css({opacity: 1});
+					}
 				});
 				
 				$(".jTagTag").live('mouseleave',function(){
-					$(this).css({opacity: 0});
+					if($(".jTagDrag").length==0){
+						$(this).css({opacity: 0});
+					}
 				});
 				
 			});
