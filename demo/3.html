@@ -10,11 +10,12 @@
 	<body>
 		<h1>jTag plugin Basic demo</h1>
 		<a href="../index.html">Back to demo list</a>
-		<p>This demo sets the defaultWidth to 200px and the minWidth to 150px</p>
+		<p>This demo sets the defaultWidth to 200px and the minWidth to 150px<br />
+		Of course there is also minHeight & defaultHeight...</p>
 		<div>
 <pre>$("#img1").tag({
-	minWidth: 150,
-	defaultWidth: 200
+	minWidth: 250,
+	defaultWidth: 300
 });
 </pre>
 			<img src="img/bettlejuice.jpg" id="img1" />
@@ -23,8 +24,8 @@
 		<script>
 			$(document).ready(function(){
 				$("#img1").tag({
-					minWidth: 150,
-					defaultWidth: 200
+					minWidth: 250,
+					defaultWidth: 300
 				});
 			});
 			

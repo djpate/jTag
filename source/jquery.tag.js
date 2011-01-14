@@ -8,7 +8,7 @@
 				minHeight : 100,
 				defaultWidth : 100,
 				defaultHeight: 100,
-				canDelete: false,
+				canDelete: true,
 				maxHeight : null,
 				maxWidth : null,
 				save : null,
@@ -19,7 +19,8 @@
 				opacity: 0.4,
 				clickToTag: true,
 				draggable: true,
-				resizable: true
+				resizable: true,
+				showTag: 'hover'
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -58,8 +59,10 @@
 					
 					$(".jTagTag").live('mouseleave',function(){
 						if($(".jTagDrag").length==0){
-							$(this).css("opacity",0);
-							$(this).find("span").hide();
+							if(options.showTag == 'hover'){
+								$(this).css("opacity",0);
+								$(this).find("span").hide();
+							}
 							obj.enableClickToTag();
 						}
 					});
@@ -74,7 +77,7 @@
 							
 							obj.enableClickToTag();
 							
-							$(this).parent().remove();
+							$(this).parent().parent().remove();
 							
 						});
 					
@@ -101,6 +104,10 @@
 			
 			$(".jTagDrag").remove();
 			
+			if(options.showTag == 'always'){
+				$(".jTagTag").show();
+			}
+			
 			obj.enableClickToTag();
 			
 		},
@@ -121,6 +128,10 @@
 			
 			if($(".jTagDrag").length==1){
 				return;
+			}
+			
+			if(options.showTag == 'always'){
+				$(".jTagTag").hide();
 			}
 					
 			$('<div style="width:'+options.defaultWidth+'px;height:'+options.defaultHeight+'px"class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo($(".jTagOverlay"));
