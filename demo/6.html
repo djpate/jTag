@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js'></script>
+		<script type='text/javascript' src='../source/jquery.tag.js'></script>
+		<link media="screen" rel="stylesheet" href="../css/jquery.jtag.css" type="text/css" />
+		<link media="screen" rel="stylesheet" href="../css/jquery-ui.custom.css" type="text/css" />
+	</head>
+	<body>
+		<h1>jTag plugin Basic demo</h1>
+		<a href="../index.html">Back to demo list</a>
+		<p>This demo will show you how to use the <strong>save</strong> & the <strong>delete</strong> callback<br />
+		Those two callbacks will enable you to do some ajax magic on those two events to save the tags in your db.<br />
+		To save tags in your db you will need those fields
+		<ul>
+			<li>id (that identifies your tag)</li>
+			<li>label</li>
+			<li>width</li>
+			<li>height</li>
+			<li>top</li>
+			<li>left</li>
+		</ul>
+		</p>
+		<div>
+<pre>$("#img1").tag({
+	save: function(width,height,top_pos,left,label,tag){
+		alert('I can save this tag ('+width+','+height+','+top_pos+','+left+','+label+')');
+		/* once the ajax is done I need to get the ID here and then set it on the tag */
+		tag.setId('someIdFromMyDb');
+	},
+	remove: function(id){
+		alert('Here I can do some ajax to delete tag #'+id+' in my db');
+	}
+});
+</pre>
+			<img src="img/bettlejuice.jpg" id="img1" />
+		</div>
+		
+		<script>
+			$(document).ready(function(){
+				$("#img1").tag({
+					save: function(width,height,top_pos,left,label,the_tag){
+						alert('I can save this tag ('+width+','+height+','+top_pos+','+left+','+label+')');
+						/* once the ajax is done I need to get the ID here and then set it on the tag */
+						the_tag.setId('someIdFromMyDb');
+					},
+					remove: function(id){
+						alert('Here I can do some ajax to delete tag #'+id+' in my db');
+					}
+				});
+			});
+			
+		</script>
+	</body>
+</html>
+

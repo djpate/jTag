@@ -8,15 +8,15 @@
 				minHeight : 100,
 				defaultWidth : 100,
 				defaultHeight: 100,
-				canDelete: true,
 				maxHeight : null,
 				maxWidth : null,
 				save : null,
 				remove: null,
+				canTag: true,
+				canDelete: true,
 				autoShowDrag: false,
 				autoComplete: null,
 				defaultTags: null,
-				opacity: 0.4,
 				clickToTag: true,
 				draggable: true,
 				resizable: true,
@@ -72,7 +72,7 @@
 						$('.jTagDeleteTag').live('click',function(){
 							
 							if(options.remove){
-								options.remove($(this).parent().getId());
+								options.remove($(this).parent().parent().getId());
 							}
 							
 							obj.enableClickToTag();
@@ -127,6 +127,10 @@
 			}
 			
 			if($(".jTagDrag").length==1){
+				return;
+			}
+			
+			if(!options.canTag){
 				return;
 			}
 			
@@ -186,7 +190,7 @@
 				tagobj = obj.addTag(width,height,top_pos,left,label);
 				
 				if(options.save){
-					options.save(width,height,top_pos,left,label,tag);
+					options.save(width,height,top_pos,left,label,tagobj);
 				}
 				
 			});
@@ -233,8 +237,6 @@
 			
 			obj = $(this);
 			
-			obj.css({opacity: 1});
-			
 			var options = obj.data('options');
 			
 			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top_pos+'px;left:'+left+'px;"><div style="width:100%;height:100%"><div class="jTagDeleteTag"></div><span>'+label+'</span></div></div>')
@@ -246,6 +248,10 @@
 			
 			if(options.canDelete){
 				obj.parent().find(".jTagDeleteTag").show();
+			}
+			
+			if(options.showTag == "always"){
+				$(".jTagTag").css("opacity",1);
 			}
 			
 			obj.hideDrag();
