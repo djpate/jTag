@@ -218,7 +218,7 @@
 			
 			var options = obj.data('options');
 			
-			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top_pos+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>')
+			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top_pos+'px;left:'+left+'px;"><div style="width:100%;height:100%"><div class="jTagDeleteTag"></div><span>'+label+'</span></div></div>')
 						.appendTo($(".jTagOverlay"));
 			
 			if(id){
