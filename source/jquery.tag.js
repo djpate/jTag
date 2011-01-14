@@ -46,16 +46,16 @@
 						obj.showDrag();
 					}
 				
-					$(".jTagTag").live('hover',function(){
-						if($(".jTagDrag").length===0){
-							$(this).css({opacity: 1});
+					$(".jTagTag").live('mouseover',function(){
+						if($(".jTagDrag").length==0){
+							$(this).css("opacity",1);
 							obj.disableClickToTag();
 						}
 					});
 					
 					$(".jTagTag").live('mouseleave',function(){
-						if($(".jTagDrag").length===0){
-							$(this).css({opacity: 0});
+						if($(".jTagDrag").length==0){
+							$(this).css("opacity",0);
 							obj.enableClickToTag();
 						}
 					});
@@ -96,8 +96,6 @@
 			$(".jTagOverlay").css("backgroundImage","");
 			
 			$(".jTagDrag").remove();
-			
-			$(".jTagTag").show();
 			
 			obj.enableClickToTag();
 			
