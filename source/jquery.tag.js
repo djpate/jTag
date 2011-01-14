@@ -46,7 +46,7 @@
 						obj.showDrag();
 					}
 				
-					$(".jTagTag").live('mouseover',function(){
+					$(".jTagTag").live('hover',function(){
 						if($(".jTagDrag").length==0){
 							$(this).css("opacity",1);
 							$(this).find("span").show();
