@@ -8,7 +8,7 @@
 				minHeight : 100,
 				defaultWidth : 100,
 				defaultHeight: 100,
-				canDelete: true,
+				canDelete: false,
 				maxHeight : null,
 				maxWidth : null,
 				save : null,
@@ -94,6 +94,7 @@
 			var options = obj.data('options');
 			
 			$(".jTagOverlay").css("backgroundColor","");
+			$(".jTagOverlay").css("backgroundUrl","");
 			
 			$(".jTagDrag").remove();
 			
@@ -125,6 +126,8 @@
 			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo($(".jTagOverlay"));
 			
 			$(".jTagOverlay").css("backgroundColor","rgba(200, 54, 54, 0.5)");
+			$(".jTagOverlay").css("backgroundUrl","url(images/trans.png)");
+			
 			
 			$(".jTagDrag").css("backgroundImage","url("+obj.attr('src')+")");
 			
