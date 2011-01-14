@@ -171,13 +171,13 @@
 				
 				height = $(this).parent().parent().height();
 				width = $(this).parent().parent().width();
-				top = $(this).parent().parent().attr('offsetTop');
+				top_pos = $(this).parent().parent().attr('offsetTop');
 				left = $(this).parent().parent().attr('offsetLeft');
 				
-				tagobj = obj.addTag(width,height,top,left,label);
+				tagobj = obj.addTag(width,height,top_pos,left,label);
 				
 				if(options.save){
-					options.save(width,height,top,left,label,tag);
+					options.save(width,height,top_pos,left,label,tag);
 				}
 				
 			});
@@ -211,7 +211,7 @@
 			});
 			$(".jTagDrag").css({backgroundPosition: position()});
 		},
-		addTag: function(width,height,top,left,label,id){
+		addTag: function(width,height,top_pos,left,label,id){
 			
 			obj = $(this);
 			
@@ -219,7 +219,7 @@
 			
 			var options = obj.data('options');
 			
-			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>')
+			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top_pos+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>')
 						.insertAfter(obj);
 			
 			if(id){
