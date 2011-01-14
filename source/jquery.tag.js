@@ -93,8 +93,7 @@
 			
 			var options = obj.data('options');
 			
-			$(".jTagOverlay").css("backgroundColor","");
-			$(".jTagOverlay").css("backgroundUrl","");
+			$(".jTagOverlay").css("backgroundImage","");
 			
 			$(".jTagDrag").remove();
 			
@@ -125,7 +124,6 @@
 					
 			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo($(".jTagOverlay"));
 			
-			$(".jTagOverlay").css("backgroundColor","rgba(200, 54, 54, 0.5)");
 			$(".jTagOverlay").css("backgroundImage","url(images/trans.png)");
 			
 			
