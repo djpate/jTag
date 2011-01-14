@@ -28,6 +28,7 @@
 				
 				obj.data("options",options);
 				
+				/* we need to wait for load because we need the img to be fully loaded to get proper width & height */
 				$(window).load(function(){
 					
 					obj.wrap('<div class="jTagArea" />');
@@ -42,13 +43,13 @@
 					obj.hide();
 					
 					if(options.autoShowDrag){
-					obj.showDrag();
+						obj.showDrag();
 					}
 				
 					$(".jTagTag").live('hover',function(){
 						if($(".jTagDrag").length===0){
 							$(this).css({opacity: 1});
-							obj.parent().unbind('mousedown');
+							obj.disableClickToTag();
 						}
 					});
 					
@@ -105,18 +106,14 @@
 
 			obj = $(this);
 			
-			obj.parent().unbind('mousedown');
+			obj.disableClickToTag();
 			
 			var options = obj.data('options');
 			
 			var position = function(){
-				
-				
 				border = parseInt($(".jTagDrag").css('borderTopWidth'));
-				top_offset = obj.parent().attr('offsetTop');
-				left_offset =  obj.parent().attr('offsetLeft');
-				left_pos = parseInt($(".jTagDrag").attr('offsetLeft')) + border - left_offset;
-				top_pos = parseInt($(".jTagDrag").attr('offsetTop')) + border - top_offset;
+				left_pos = parseInt($(".jTagDrag").attr('offsetLeft')) + border;
+				top_pos = parseInt($(".jTagDrag").attr('offsetTop')) + border;
 				return "-"+left_pos+"px -"+top_pos+"px";
 			}
 			
@@ -187,7 +184,7 @@
 			});
 			
 			$(".jTagDrag").resizable({
-				containment: 'parent',
+				containment: obj.parent(),
 				minWidth: options.minWidth,
 				minHeight: options.minHeight,
 				maxWidht: options.maxWidth,
@@ -201,7 +198,7 @@
 			});
 		
 			$(".jTagDrag").draggable({
-				containment: 'parent',
+				containment: obj.parent(),
 				drag: function(){
 					$(".jTagDrag").css({backgroundPosition: position()});
 				},
@@ -209,6 +206,7 @@
 					$(".jTagDrag").css({backgroundPosition: position()});
 				}
 			});
+			
 			$(".jTagDrag").css({backgroundPosition: position()});
 		},
 		addTag: function(width,height,top_pos,left,label,id){
@@ -220,7 +218,7 @@
 			var options = obj.data('options');
 			
 			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top_pos+'px;left:'+left+'px;"><div class="jTagDeleteTag"></div><span>'+label+'</span></div>')
-						.insertAfter(obj);
+						.appendTo($(".jTagOverlay"));
 			
 			if(id){
 				tag.setId(id);
@@ -260,6 +258,15 @@
 					obj.showDrag(e);
 					obj.parent().unbind('mousedown');
 				});
+			}
+		},
+		disableClickToTag: function(){
+			
+			obj = $(this);
+			var options = obj.data('options');
+			
+			if(options.clickToTag){
+				obj.parent().unbind('mousedown');
 			}
 		}
 	});
