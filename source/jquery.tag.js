@@ -172,6 +172,7 @@
 				height = $(this).parent().parent().height();
 				width = $(this).parent().parent().width();
 				top_pos = $(this).parent().parent().attr('offsetTop');
+				alert(top_pos);
 				left = $(this).parent().parent().attr('offsetLeft');
 				
 				tagobj = obj.addTag(width,height,top_pos,left,label);
