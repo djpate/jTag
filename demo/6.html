@@ -24,10 +24,10 @@
 		</p>
 		<div>
 <pre>$("#img1").tag({
-	save: function(width,height,top_pos,left,label,tag){
+	save: function(width,height,top_pos,left,label,the_tag){
 		alert('I can save this tag ('+width+','+height+','+top_pos+','+left+','+label+')');
 		/* once the ajax is done I need to get the ID here and then set it on the tag */
-		tag.setId('someIdFromMyDb');
+		the_tag.setId('someIdFromMyDb');
 	},
 	remove: function(id){
 		alert('Here I can do some ajax to delete tag #'+id+' in my db');
