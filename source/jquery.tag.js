@@ -49,6 +49,7 @@
 					$(".jTagTag").live('mouseover',function(){
 						if($(".jTagDrag").length==0){
 							$(this).css("opacity",1);
+							$(this).find("span").show();
 							obj.disableClickToTag();
 						}
 					});
@@ -56,6 +57,7 @@
 					$(".jTagTag").live('mouseleave',function(){
 						if($(".jTagDrag").length==0){
 							$(this).css("opacity",0);
+							$(this).find("span").hide();
 							obj.enableClickToTag();
 						}
 					});
