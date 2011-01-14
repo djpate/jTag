@@ -1,42 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
-		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js'></script>
-		<script type='text/javascript' src='source/jquery.tag.js'></script>
-		<link media="screen" rel="stylesheet" href="css/jquery.jtag.css" type="text/css" />
-		<link media="screen" rel="stylesheet" href="css/jquery-ui.custom.css" type="text/css" />
+		
 	</head>
 	<body>
-		<h1>Jtag plugin</h1>
-		<div style="float:left">
-			check out the documentation @ www.djpate.com
+		<h1>jTag plugin documentation</h1>
+		<p>Here is a few example on how to use the jTag plugin. You can find some more info on my blog.</p>
+		<p>You can download the latest version of this script on GitHub</p>
+		<div>
+			<ul>
+				<li><a href="demo/1.html">Basic demo</a></li>
+				<li><a href="demo/2.html">Enable/disable demo</a></li>
+			</ul>
 		</div>
-		<div style="float:left;padding:5px">
-			<img src="http://www.eje-kidz.com/wp-content/uploads/2007/05/whereshomer.jpg" class="tagMe" />
-			<button id="enable">Tag someone</button>
-		</div>
-		
-		<script>
-			$(document).ready(function(){
-				$(".tagMe").tag({
-					autoComplete: [
-						{id: 1,label: 'Christophe'},
-						{id: 2,label: 'Gaultier'}
-					],
-					save: function(width,height,top,left,label,tag){
-						tag.setId("mon tag");
-					},
-					remove: function(id){
-						alert(id);
-					}
-				});
-				
-				$("#enable").click(function(){
-					$(".tagMe").showDrag();
-				});
-			});
-			
-		</script>
 	</body>
 </html>

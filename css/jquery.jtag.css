@@ -59,6 +59,10 @@
 	background-position: center center;
 }
 
+.jTagPngOverlay{
+	background: url(../images/trans.png);
+}
+
 
 .jTagTag{
 	opacity: 0;

@@ -17,7 +17,9 @@
 				autoComplete: null,
 				defaultTags: null,
 				opacity: 0.4,
-				clickToTag: true
+				clickToTag: true,
+				draggable: true,
+				resizable: true
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -95,7 +97,7 @@
 			
 			var options = obj.data('options');
 			
-			$(".jTagOverlay").css("backgroundImage","");
+			$(".jTagOverlay").removeClass("jTagPngOverlay");
 			
 			$(".jTagDrag").remove();
 			
@@ -118,14 +120,12 @@
 			}
 			
 			if($(".jTagDrag").length==1){
-				alert("You're allready tagging someone");
 				return;
 			}
 					
-			$('<div class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo($(".jTagOverlay"));
+			$('<div style="width:'+options.defaultWidth+'px;height:'+options.defaultHeight+'px"class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo($(".jTagOverlay"));
 			
-			$(".jTagOverlay").css("backgroundImage","url(images/trans.png)");
-			
+			$(".jTagOverlay").addClass("jTagPngOverlay");
 			
 			$(".jTagDrag").css("backgroundImage","url("+obj.attr('src')+")");
 			
@@ -184,29 +184,37 @@
 				obj.hideDrag();
 			});
 			
-			$(".jTagDrag").resizable({
-				containment: obj.parent(),
-				minWidth: options.minWidth,
-				minHeight: options.minHeight,
-				maxWidht: options.maxWidth,
-				maxHeight: options.maxHeight,
-				resize: function(){
-					$(".jTagDrag").css({backgroundPosition: position()});
-				},
-				stop: function(){
-					$(".jTagDrag").css({backgroundPosition: position()});
-				}
-			});
+			if(options.resizable){
+			
+				$(".jTagDrag").resizable({
+					containment: obj.parent(),
+					minWidth: options.minWidth,
+					minHeight: options.minHeight,
+					maxWidht: options.maxWidth,
+					maxHeight: options.maxHeight,
+					resize: function(){
+						$(".jTagDrag").css({backgroundPosition: position()});
+					},
+					stop: function(){
+						$(".jTagDrag").css({backgroundPosition: position()});
+					}
+				});
+			
+			}
 		
-			$(".jTagDrag").draggable({
-				containment: obj.parent(),
-				drag: function(){
-					$(".jTagDrag").css({backgroundPosition: position()});
-				},
-				stop: function(){
-					$(".jTagDrag").css({backgroundPosition: position()});
-				}
-			});
+			if(options.draggable){
+		
+				$(".jTagDrag").draggable({
+					containment: obj.parent(),
+					drag: function(){
+						$(".jTagDrag").css({backgroundPosition: position()});
+					},
+					stop: function(){
+						$(".jTagDrag").css({backgroundPosition: position()});
+					}
+				});
+			
+			}
 			
 			$(".jTagDrag").css({backgroundPosition: position()});
 		},
