@@ -1,0 +1,19 @@
+jTag Plugin
+------------------------------------------------------------------
+
+Requirements :
+
+	jQuery 1.4+
+	jQuery ui with drag,resize & autocomplete
+
+Tested on :
+
+	FF 3.6+
+	IE 8+
+	Chrome 8+
+
+Please check out djpate.com/portfolio/jTag/index.html for some demo &
+
+djpate.com for the documentation.
+
+Have fun !
