@@ -20,7 +20,8 @@
 				clickToTag: true,
 				draggable: true,
 				resizable: true,
-				showTag: 'hover'
+				showTag: 'hover',
+				debug: false
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -145,6 +146,14 @@
 			$(".jTagDrag").css("backgroundImage","url("+obj.attr('src')+")");
 			
 			if(e){
+				
+				if(options.debug){
+					console.log("Click x : "+e.pageX);
+					console.log("Click y : "+e.pageX);
+					console.log("Offset left :"+obj.parent().attr('offsetLeft');
+					console.log("Offset top :"+obj.parent().attr('offsetTop');
+				}
+				
 				x = e.pageX - obj.parent().attr('offsetLeft');
 				y = e.pageY - obj.parent().attr('offsetTop');
 				
