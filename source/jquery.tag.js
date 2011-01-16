@@ -147,15 +147,30 @@
 			
 			if(e){
 				
-				if(options.debug){
-					console.log("Click x : "+e.pageX);
-					console.log("Click y : "+e.pageX);
-					console.log("Offset left :"+obj.parent().attr('offsetLeft'));
-					console.log("Offset top :"+obj.parent().attr('offsetTop'));
+				function findPos(someObj){
+					var curleft = curtop = 0;
+					if (someObj.offsetParent) {
+						do {
+							curleft += someObj.offsetLeft;
+							curtop += someObj.offsetTop;
+						} while (someObj = someObj.offsetParent);
+						return [curleft,curtop];
+					}
 				}
 				
-				x = e.pageX - obj.parent().attr('offsetLeft');
-				y = e.pageY - obj.parent().attr('offsetTop');
+				/* get real offset */
+				pos = findPos(obj.parent()[0]);
+				
+				
+				if(options.debug){
+					console.log("Click x : "+e.pageX);
+					console.log("Click y : "+e.pageY);
+					console.log("Offset left :"+pos[0]);
+					console.log("Offset top :"+pos[1]);
+				}
+				
+				x = e.pageX - pos[0];
+				y = e.pageY - pos[1];
 				
 				if(x + $(".jTagDrag").width() > obj.parent().width()){
 					x = obj.parent().width() - $(".jTagDrag").width() - 2;
