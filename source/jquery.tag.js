@@ -150,8 +150,8 @@
 				if(options.debug){
 					console.log("Click x : "+e.pageX);
 					console.log("Click y : "+e.pageX);
-					console.log("Offset left :"+obj.parent().attr('offsetLeft');
-					console.log("Offset top :"+obj.parent().attr('offsetTop');
+					console.log("Offset left :"+obj.parent().attr('offsetLeft'));
+					console.log("Offset top :"+obj.parent().attr('offsetTop'));
 				}
 				
 				x = e.pageX - obj.parent().attr('offsetLeft');
