@@ -169,8 +169,8 @@
 					console.log("Offset top :"+pos[1]);
 				}
 				
-				x = e.pageX - pos[0];
-				y = e.pageY - pos[1];
+				x = e.pageX - pos[0] - (options.defaultWidth / 2);
+				y = e.pageY - pos[1] - (options.defaultHeight / 2);
 				
 				if(x + $(".jTagDrag").width() > obj.parent().width()){
 					x = obj.parent().width() - $(".jTagDrag").width() - 2;
