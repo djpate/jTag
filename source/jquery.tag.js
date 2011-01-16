@@ -161,20 +161,14 @@
 				/* get real offset */
 				pos = findPos(obj.parent()[0]);
 				
-				
-				if(options.debug){
-					console.log("Click x : "+e.pageX);
-					console.log("Click y : "+e.pageY);
-					console.log("Offset left :"+pos[0]);
-					console.log("Offset top :"+pos[1]);
-				}
-				
-				x = e.pageX - pos[0] - (options.defaultWidth / 2);
-				y = e.pageY - pos[1] - (options.defaultHeight / 2);
+				x = Math.max(0,e.pageX - pos[0] - (options.defaultWidth / 2));
+				y = Math.max(0,e.pageY - pos[1] - (options.defaultHeight / 2));
 				
 				if(x + $(".jTagDrag").width() > obj.parent().width()){
 					x = obj.parent().width() - $(".jTagDrag").width() - 2;
 				}
+				
+			
 				
 				if(y + $(".jTagDrag").height() > obj.parent().height()){
 					y = obj.parent().height() - $(".jTagDrag").height() - 2;
