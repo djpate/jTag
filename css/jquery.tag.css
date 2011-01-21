@@ -84,8 +84,13 @@
 	line-height:20px;
 }
 
+.jTagLabels{
+	padding:5px;
+}
+
 .jTagLabels label{
 	font-weight:bold;
 	padding:5px;
 	cursor:pointer;
+	float:left;
 }

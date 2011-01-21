@@ -62,7 +62,6 @@
 					obj.parent().height(obj.height());
 					
 					obj.parent().parent().width(obj.width());
-					obj.parent().parent().height(obj.height());
 					
 					obj.hide();
 					
