@@ -33,6 +33,7 @@
 				draggable: true,
 				resizable: true,
 				showTag: 'hover',
+				showLabels: true,
 				debug: false
 			};
 			
@@ -47,7 +48,11 @@
 				/* we need to wait for load because we need the img to be fully loaded to get proper width & height */
 				$(window).load(function(){
 					
+					obj.wrap('<div class="jTagContainer" />');
+					
 					obj.wrap('<div class="jTagArea" />');
+					
+					$("<div class='jTagLabels' />").insertAfter($(".jTagArea"));
 					
 					$('<div class="jTagOverlay"></div>').insertBefore(obj);
 					
@@ -55,6 +60,9 @@
 					
 					obj.parent().width(obj.width());
 					obj.parent().height(obj.height());
+					
+					obj.parent().parent().width(obj.width());
+					obj.parent().parent().height(obj.height());
 					
 					obj.hide();
 					
@@ -79,6 +87,19 @@
 							obj.enableClickToTag();
 						}
 					});
+					
+					if(options.showLabels && options.showTag != 'always'){
+					
+						$(".jTagLabels label").live('mouseenter',function(){
+							$("#"+$(this).attr('rel')).css('opacity',1).find("span").show();
+						});
+						
+						$(".jTagLabels label").live('mouseleave',function(){
+							$("#"+$(this).attr('rel')).css('opacity',0).find("span").hide();
+							
+						});
+					
+					}
 					
 					if(options.canDelete){
 					
@@ -269,7 +290,7 @@
 			
 			var options = obj.data('options');
 			
-			tag = $('<div class="jTagTag" style="width:'+width+'px;height:'+height+'px;top:'+top_pos+'px;left:'+left+'px;"><div style="width:100%;height:100%"><div class="jTagDeleteTag"></div><span>'+label+'</span></div></div>')
+			tag = $('<div class="jTagTag" id="tag'+($(".jTagTag").length+1)+'"style="width:'+width+'px;height:'+height+'px;top:'+top_pos+'px;left:'+left+'px;"><div style="width:100%;height:100%"><div class="jTagDeleteTag"></div><span>'+label+'</span></div></div>')
 						.appendTo($(".jTagOverlay"));
 			
 			if(id){
@@ -282,6 +303,10 @@
 			
 			if(options.showTag == "always"){
 				$(".jTagTag").css("opacity",1);
+			}
+			
+			if(options.showLabels){
+				$("<label rel='tag"+$(".jTagTag").length+"'>"+label+"</label>").appendTo($(".jTagLabels"));
 			}
 			
 			obj.hideDrag();
