@@ -104,12 +104,20 @@
 					
 						$('.jTagDeleteTag').live('click',function(){
 							
+							/* launch callback */
 							if(options.remove){
 								options.remove($(this).parent().parent().getId());
 							}
 							
 							obj.enableClickToTag();
 							
+							/* remove the label */
+							if(options.showLabels){
+								console.log($(this).parent().parent().attr('id'));
+								$(".jTagLabels").find('label[rel="'+$(this).parent().parent().attr('id')+'"]').remove();
+							}
+							
+							/* remove the actual tag from dom */
 							$(this).parent().parent().remove();
 							
 						});
