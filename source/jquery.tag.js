@@ -52,7 +52,7 @@
 					
 					obj.wrap('<div class="jTagArea" />');
 					
-					$("<div class='jTagLabels' />").insertAfter($(".jTagArea"));
+					$("<div class='jTagLabels'><div style='clear:both'></div></div>").insertAfter($(".jTagArea"));
 					
 					$('<div class="jTagOverlay"></div>').insertBefore(obj);
 					
@@ -305,7 +305,7 @@
 			}
 			
 			if(options.showLabels){
-				$("<label rel='tag"+$(".jTagTag").length+"'>"+label+"</label>").appendTo($(".jTagLabels"));
+				$("<label rel='tag"+$(".jTagTag").length+"'>"+label+"</label>").insertBefore($(".jTagLabels div:last"));
 			}
 			
 			obj.hideDrag();
