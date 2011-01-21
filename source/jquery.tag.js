@@ -72,6 +72,7 @@
 					$(".jTagTag").live('mouseenter',function(){
 						if($(".jTagDrag").length==0){
 							$(this).css("opacity",1);
+							$(".jTagDeleteTag",this).show();
 							$(this).find("span").show();
 							obj.disableClickToTag();
 						}
@@ -81,6 +82,7 @@
 						if($(".jTagDrag").length==0){
 							if(options.showTag == 'hover'){
 								$(this).css("opacity",0);
+								$(".jTagDeleteTag",this).hide();
 								$(this).find("span").hide();
 							}
 							obj.enableClickToTag();
@@ -91,10 +93,12 @@
 					
 						$(".jTagLabels label").live('mouseenter',function(){
 							$("#"+$(this).attr('rel')).css('opacity',1).find("span").show();
+							$(".jTagDeleteTag").show();
 						});
 						
 						$(".jTagLabels label").live('mouseleave',function(){
 							$("#"+$(this).attr('rel')).css('opacity',0).find("span").hide();
+							$(".jTagDeleteTag").hide();
 							
 						});
 					
