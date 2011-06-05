@@ -56,8 +56,8 @@
 					
 					$('<div class="jTagOverlay"></div>').insertBefore(obj);
 					
-					container = obj.parent().parent();
-					overlay = obj.prev();
+					var container = obj.parent().parent();
+					var overlay = obj.prev();
 					
 					obj.parent().css("backgroundImage","url("+obj.attr('src')+")");
 					
@@ -95,12 +95,12 @@
 					if(options.showLabels && options.showTag != 'always'){
 					
 						container.delegate('.jTagLabels label','mouseenter',function(){
-							$("#"+$(this).attr('rel'),container).css('opacity',1).find("span").show();
+							$("#"+$(this).attr('rel')).css('opacity',1).find("span").show();
 							$(".jTagDeleteTag",container).show();
 						});
 						
 						container.delegate('.jTagLabels label','mouseleave',function(){
-							$("#"+$(this).attr('rel'),container).css('opacity',0).find("span").hide();
+							$("#"+$(this).attr('rel')).css('opacity',0).find("span").hide();
 							$(".jTagDeleteTag",container).hide();
 							
 						});
