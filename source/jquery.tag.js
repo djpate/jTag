@@ -34,7 +34,9 @@
 				resizable: true,
 				showTag: 'hover',
 				showLabels: true,
-				debug: false
+				debug: false,
+        clickable: false,
+        click: null
 			};
 			
 			var options = $.extend(defaults, options);  
@@ -56,8 +58,8 @@
 					
 					$('<div class="jTagOverlay"></div>').insertBefore(obj);
 					
-					var container = obj.parent().parent();
-					var overlay = obj.prev();
+					container = obj.parent().parent();
+					overlay = obj.prev();
 					
 					obj.parent().css("backgroundImage","url("+obj.attr('src')+")");
 					
@@ -75,7 +77,9 @@
 					container.delegate('.jTagTag','mouseenter',function(){
 						if($(".jTagDrag",container).length==0){
 							$(this).css("opacity",1);
-							$(".jTagDeleteTag",this).show();
+              if(options.canDelete){
+                $(".jTagDeleteTag",this).show();
+              }							
 							$(this).find("span").show();
 							obj.disableClickToTag();
 						}
@@ -85,7 +89,9 @@
 						if($(".jTagDrag",container).length==0){
 							if(options.showTag == 'hover'){
 								$(this).css("opacity",0);
-								$(".jTagDeleteTag",this).hide();
+                if(options.canDelete){
+                  $(".jTagDeleteTag",this).hide();
+                }
 								$(this).find("span").hide();
 							}
 							obj.enableClickToTag();
@@ -95,13 +101,17 @@
 					if(options.showLabels && options.showTag != 'always'){
 					
 						container.delegate('.jTagLabels label','mouseenter',function(){
-							$("#"+$(this).attr('rel')).css('opacity',1).find("span").show();
-							$(".jTagDeleteTag",container).show();
+							$("#"+$(this).attr('rel'),container).css('opacity',1).find("span").show();
+              if(options.canDelete){
+                $(".jTagDeleteTag",container).show();
+              }
 						});
 						
 						container.delegate('.jTagLabels label','mouseleave',function(){
-							$("#"+$(this).attr('rel')).css('opacity',0).find("span").hide();
-							$(".jTagDeleteTag",container).hide();
+							$("#"+$(this).attr('rel'),container).css('opacity',0).find("span").hide();
+              if(options.canDelete){
+                $(".jTagDeleteTag",container).hide();
+              }
 							
 						});
 					
@@ -128,6 +138,15 @@
 							
 						});
 					
+					}
+          
+          if(options.clickable){
+						container.delegate('.jTagTag','click',function(){
+							/* launch callback */
+							if(options.click){
+								options.click($(this).find('span').html());
+							}
+						});
 					}
 					
 					if(options.defaultTags){
