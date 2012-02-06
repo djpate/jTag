@@ -216,6 +216,8 @@
 			
 			jtagdrag.css("backgroundImage","url("+obj.attr('src')+")");
 			
+			jtagdrag.css("position", "absolute");
+			
 			if(e){
 				
 				function findPos(someObj){
