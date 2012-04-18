@@ -296,7 +296,7 @@
 					containment: obj.parent(),
 					minWidth: options.minWidth,
 					minHeight: options.minHeight,
-					maxWidht: options.maxWidth,
+					maxWidth: options.maxWidth,
 					maxHeight: options.maxHeight,
 					resize: function(){
 						jtagdrag.css({backgroundPosition: position(overlay)});
