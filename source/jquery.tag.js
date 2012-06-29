@@ -36,39 +36,57 @@
             var container = image.parent();
 
             image.data('currentlyjTagging', true);
-
-
-            window_x = Math.min( Math.max( (event.pageX - offset.left) - image.data('options').defaultWidth / 2,0), (image.width() - image.data('options').defaultWidth));
-            window_y = Math.min( Math.max( (event.pageY - offset.top ) - image.data('options').defaultHeight / 2, 0), (image.height() - image.data('options').defaultHeight));
+            image.css('opacity', 0.3);
 
             var tagWindow = $("<div class='jTagTagWindow'></div>").css('width', image.data('options').defaultWidth)
                                                                   .css('height', image.data('options').defaultHeight)
-                                                                  .css('top', window_y)
-                                                                  .css('left', window_x)
+                                                                  .css('background-image', 'url('+image.attr('src') +') ')
                                                                   .appendTo(container);
+
+            tagWindow.data("offset", offset);
+            tagWindow.data("imageWidth", image.width());
+            tagWindow.data("imageHeight", image.height());
+
+
+            jTag.privateMethods.positionTagWindow(tagWindow, event);
 
             tagWindow.on('mousemove', function(event){
               if($(this).data('mousedown') == true){
 
-                window_x = Math.min( Math.max( (event.pageX - offset.left) - image.data('options').defaultWidth / 2,0), (image.width() - image.data('options').defaultWidth));
-                window_y = Math.min( Math.max( (event.pageY - offset.top ) - image.data('options').defaultHeight / 2, 0), (image.height() - image.data('options').defaultHeight));
+                jTag.privateMethods.positionTagWindow(tagWindow, event);
 
-                $(this).css('top', window_y)
-                       .css('left', window_x);
               }
             });
 
-            tagWindow.on('mousedown', function(){
+            tagWindow.on('mousedown', function(event){
+              event.preventDefault();
+              $(this).css('cursor', 'move');
               $(this).data('mousedown', true)
             });
 
-            tagWindow.on('mouseup, mouseout', function(){
+            tagWindow.on('mouseup', function(event){
+              event.preventDefault();
+              $(this).css('cursor', 'auto');
               $(this).data('mousedown', false)
             });
 
           }
 
         });
+
+      },
+
+      positionTagWindow: function(tagWindow, event){
+
+        window_x = Math.min( Math.max( (event.pageX - tagWindow.data('offset').left) - tagWindow.outerWidth() / 2,0), (tagWindow.data('imageWidth') - tagWindow.outerWidth()));
+        window_y = Math.min( Math.max( (event.pageY - tagWindow.data('offset').top ) - tagWindow.outerHeight() / 2, 0), (tagWindow.data('imageHeight') - tagWindow.outerHeight()));
+
+        image_position_x = tagWindow.data('imageWidth') - window_x - parseInt(tagWindow.css('border-left-width'), 10);
+        image_position_y = tagWindow.data('imageHeight') - window_y - parseInt(tagWindow.css('border-top-width'), 10);
+
+        tagWindow.css('top', window_y)
+                  .css('left', window_x)
+                  .css('background-position',  image_position_x+"px " + image_position_y+"px");
 
       }
 
