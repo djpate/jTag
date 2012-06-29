@@ -43,6 +43,18 @@
                                                                   .css('background-image', 'url('+image.attr('src') +') ')
                                                                   .appendTo(container);
 
+            $("<div class='jTagTopLeftHandle'></div>").appendTo(tagWindow);
+            $("<div class='jTagTopRightHandle'></div>").appendTo(tagWindow);
+            $("<div class='jTagTopMiddleHandle'></div>").appendTo(tagWindow);
+
+            $("<div class='jTagMiddleRightHandle'></div>").appendTo(tagWindow);
+            $("<div class='jTagMiddleLeftHandle'></div>").appendTo(tagWindow);
+
+            
+            $("<div class='jTagBottomLeftHandle'></div>").appendTo(tagWindow);
+            $("<div class='jTagBottomRightHandle'></div>").appendTo(tagWindow);
+            $("<div class='jTagBottomMiddleHandle'></div>").appendTo(tagWindow);
+
             tagWindow.data("offset", offset);
             tagWindow.data("imageWidth", image.width());
             tagWindow.data("imageHeight", image.height());
@@ -69,6 +81,10 @@
               $(this).css('cursor', 'auto');
               $(this).data('mousedown', false)
             });
+
+          } else if(image.data('currentlyjTagging') == true){
+
+            jTag.privateMethods.positionTagWindow(image.parent().find('.jTagTagWindow'), event);
 
           }
 
