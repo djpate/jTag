@@ -26,6 +26,9 @@
             image.css('opacity', 0.3);
 
             var tagWindow = jTag.domMethods.createTagWindow(image);
+            image.parent().data('tagWindow', tagWindow)
+                          .data('currentlyjTagging', true);
+
 
             jTag.privateMethods.positionTagWindow(tagWindow, event);
 
@@ -42,13 +45,36 @@
       tagWindow: function(){
 
         $(document).on('mousemove', '.jTagImageContainer', function(event){
+
+          event.preventDefault();
+
+          if($(this).data('currentlyjTagging') == true){
           
-          var tagWindow = $(this).find('.jTagTagWindow');
-          
-          if(tagWindow.data('mousedown') == true){
-            jTag.privateMethods.positionTagWindow(tagWindow, event);
+            var tagWindow = $(this).data('tagWindow');
+            
+            if(tagWindow.data('mousedown') == true){
+              jTag.privateMethods.positionTagWindow(tagWindow, event);
+            }
+
           }
 
+        });
+
+        $(document).on('mouseleave',".jTagImageContainer", function(event){
+    
+          event.preventDefault();
+
+          if($(this).data('currentlyjTagging') == true){
+
+            var tagWindow = $(this).data('tagWindow');
+            
+            if(tagWindow.data('mousedown') == true){
+              tagWindow.css('cursor', 'auto');
+              tagWindow.data('mousedown', false);
+            }
+
+          }
+        
         });
 
         $(document).on('mousedown','.jTagTagWindow', function(event){
@@ -64,19 +90,6 @@
           event.preventDefault();
           $(this).css('cursor', 'auto');
           $(this).data('mousedown', false)
-        
-        });
-
-        $(document).on('mouseleave',".jTagImageContainer", function(event){
-    
-          event.preventDefault();
-
-          var tagWindow = $(this).find('.jTagTagWindow');
-          
-          if(tagWindow.data('mousedown') == true){
-            tagWindow.css('cursor', 'auto');
-            tagWindow.data('mousedown', false);
-          }
         
         });
 
