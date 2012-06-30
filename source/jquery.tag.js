@@ -14,6 +14,114 @@
 
   jTag = {
 
+    listeners: {
+      imageListener: function(image){
+
+        image.on('click', function(event){
+
+          /* add window if tagging is enabled and if no window allready present */
+          if(image.data('options').canTag && image.data('currentlyjTagging') == false ){
+
+            image.data('currentlyjTagging', true);
+            image.css('opacity', 0.3);
+
+            var tagWindow = jTag.domMethods.createTagWindow(image);
+
+            jTag.privateMethods.positionTagWindow(tagWindow, event);
+
+          } else if(image.data('currentlyjTagging') == true){
+
+            jTag.privateMethods.positionTagWindow(image.parent().find('.jTagTagWindow'), event);
+
+          }
+
+        });
+
+      },
+
+      tagWindow: function(){
+
+        $(document).on('mousemove', '.jTagImageContainer', function(event){
+          
+          var tagWindow = $(this).find('.jTagTagWindow');
+          
+          if(tagWindow.data('mousedown') == true){
+            jTag.privateMethods.positionTagWindow(tagWindow, event);
+          }
+
+        });
+
+        $(document).on('mousedown','.jTagTagWindow', function(event){
+          
+          event.preventDefault();
+          $(this).css('cursor', 'move');
+          $(this).data('mousedown', true)
+        
+        });
+
+        $(document).on('mouseup',".jTagTagWindow", function(event){
+        
+          event.preventDefault();
+          $(this).css('cursor', 'auto');
+          $(this).data('mousedown', false)
+        
+        });
+
+        $(document).on('mouseleave',".jTagImageContainer", function(event){
+    
+          event.preventDefault();
+
+          var tagWindow = $(this).find('.jTagTagWindow');
+          
+          if(tagWindow.data('mousedown') == true){
+            tagWindow.css('cursor', 'auto');
+            tagWindow.data('mousedown', false);
+          }
+        
+        });
+
+      },
+
+      handles: function(){
+
+       
+
+      }
+    },
+
+    domMethods: {
+
+      createTagWindow: function(image){
+
+        var offset = image.offset();
+        var container = image.parent();
+
+        var tagWindow = $("<div class='jTagTagWindow'></div>").css('width', image.data('options').defaultWidth)
+                                                                  .css('height', image.data('options').defaultHeight)
+                                                                  .css('background-image', 'url('+image.attr('src') +') ')
+                                                                  .data("offset", offset)
+                                                                  .data("imageWidth", image.width())
+                                                                  .data("imageHeight", image.height())
+                                                                  .appendTo(container);
+
+        $("<div class='jTagTopLeftHandle jTagHandle'></div>").appendTo(tagWindow);
+        $("<div class='jTagTopRightHandle jTagHandle'></div>").appendTo(tagWindow);
+        $("<div class='jTagTopMiddleHandle jTagHandle'></div>").appendTo(tagWindow);
+
+        $("<div class='jTagMiddleRightHandle jTagHandle'></div>").appendTo(tagWindow);
+        $("<div class='jTagMiddleLeftHandle jTagHandle'></div>").appendTo(tagWindow);
+
+        
+        $("<div class='jTagBottomLeftHandle jTagHandle'></div>").appendTo(tagWindow);
+        $("<div class='jTagBottomRightHandle jTagHandle'></div>").appendTo(tagWindow);
+        $("<div class='jTagBottomMiddleHandle jTagHandle'></div>").appendTo(tagWindow);
+
+        return tagWindow;
+
+      }
+
+    },
+
     privateMethods: {
 
       setupWrappers: function(image){
@@ -27,68 +135,10 @@
 
       setupListeners: function(image){
 
-        image.on('click', function(event){
-
-          /* add window if tagging is enabled and if no window allready present */
-          if(image.data('options').canTag && image.data('currentlyjTagging') == false ){
-
-            var offset = image.offset();
-            var container = image.parent();
-
-            image.data('currentlyjTagging', true);
-            image.css('opacity', 0.3);
-
-            var tagWindow = $("<div class='jTagTagWindow'></div>").css('width', image.data('options').defaultWidth)
-                                                                  .css('height', image.data('options').defaultHeight)
-                                                                  .css('background-image', 'url('+image.attr('src') +') ')
-                                                                  .appendTo(container);
-
-            $("<div class='jTagTopLeftHandle'></div>").appendTo(tagWindow);
-            $("<div class='jTagTopRightHandle'></div>").appendTo(tagWindow);
-            $("<div class='jTagTopMiddleHandle'></div>").appendTo(tagWindow);
-
-            $("<div class='jTagMiddleRightHandle'></div>").appendTo(tagWindow);
-            $("<div class='jTagMiddleLeftHandle'></div>").appendTo(tagWindow);
-
-            
-            $("<div class='jTagBottomLeftHandle'></div>").appendTo(tagWindow);
-            $("<div class='jTagBottomRightHandle'></div>").appendTo(tagWindow);
-            $("<div class='jTagBottomMiddleHandle'></div>").appendTo(tagWindow);
-
-            tagWindow.data("offset", offset);
-            tagWindow.data("imageWidth", image.width());
-            tagWindow.data("imageHeight", image.height());
-
-
-            jTag.privateMethods.positionTagWindow(tagWindow, event);
-
-            tagWindow.on('mousemove', function(event){
-              if($(this).data('mousedown') == true){
-
-                jTag.privateMethods.positionTagWindow(tagWindow, event);
-
-              }
-            });
-
-            tagWindow.on('mousedown', function(event){
-              event.preventDefault();
-              $(this).css('cursor', 'move');
-              $(this).data('mousedown', true)
-            });
-
-            tagWindow.on('mouseup', function(event){
-              event.preventDefault();
-              $(this).css('cursor', 'auto');
-              $(this).data('mousedown', false)
-            });
-
-          } else if(image.data('currentlyjTagging') == true){
-
-            jTag.privateMethods.positionTagWindow(image.parent().find('.jTagTagWindow'), event);
-
-          }
-
-        });
+        jTag.listeners.imageListener(image);
+        jTag.listeners.tagWindow();
+        jTag.listeners.handles();
+        
 
       },
 

@@ -11,14 +11,7 @@
 	z-index: 2;
 }
 
-.jTagTopLeftHandle, 
-.jTagTopRightHandle, 
-.jTagTopMiddleHandle, 
-.jTagBottomLeftHandle, 
-.jTagBottomMiddleHandle, 
-.jTagBottomRightHandle,
-.jTagMiddleRightHandle,
-.jTagMiddleLeftHandle{
+.jTagHandle{
 	position: absolute;
 	width: 5px;
 	height: 5px;
