@@ -58,6 +58,49 @@
 
           }
 
+          if($(this).data('jTagResizing') != false){
+            //find cursor position relative to the container
+            container_offset = $(this).offset();
+            var tagWindow = $(this).data('tagWindow');
+            
+            x = event.pageX - container_offset.left;
+            y = event.pageY - container_offset.top;
+
+            desired_width =  x - parseInt(tagWindow.css('left'),10);
+            desired_height = y - parseInt(tagWindow.css('top'),10);
+
+            //handle minwidth & height
+            if( $(this).data('options').minWidth != null )
+            {
+              desired_width = Math.max(desired_width, $(this).data('options').minWidth);
+            } else {
+              desired_width = Math.max(desired_width, 1);
+            }
+
+            if( $(this).data('options').minHeight != null )
+            {
+              desired_height = Math.max(desired_height, $(this).data('options').minHeight);
+            } else {
+               desired_height = Math.max(desired_height, 1);
+            }
+
+            //handle maxwidth & height
+            if( $(this).data('options').maxWidth != null )
+            {
+              desired_width = Math.min(desired_width, $(this).data('options').maxWidth);
+            }
+
+            if( $(this).data('options').maxHeight != null )
+            {
+              desired_height = Math.min(desired_height, $(this).data('options').maxHeight);
+            }
+
+            //handle image constraint
+
+            tagWindow.css('width', desired_width +"px");
+            tagWindow.css('height', desired_height +"px");
+          }
+
         });
 
         $(document).on('mouseleave',".jTagImageContainer", function(event){
@@ -97,7 +140,17 @@
 
       handles: function(){
 
-       
+        $(document).on('mouseup',".jTagImageContainer", function(event){
+
+          $(this).data('jTagResizing',false)
+          
+        });
+
+       $(document).on('mousedown', '.jTagHandle', function(event){
+          event.preventDefault();
+          event.stopPropagation();
+          $(this).parent().parent().data('jTagResizing', true);
+       });
 
       }
     },
@@ -117,17 +170,7 @@
                                                                   .data("imageHeight", image.height())
                                                                   .appendTo(container);
 
-        $("<div class='jTagTopLeftHandle jTagHandle'></div>").appendTo(tagWindow);
-        $("<div class='jTagTopRightHandle jTagHandle'></div>").appendTo(tagWindow);
-        $("<div class='jTagTopMiddleHandle jTagHandle'></div>").appendTo(tagWindow);
-
-        $("<div class='jTagMiddleRightHandle jTagHandle'></div>").appendTo(tagWindow);
-        $("<div class='jTagMiddleLeftHandle jTagHandle'></div>").appendTo(tagWindow);
-
-        
-        $("<div class='jTagBottomLeftHandle jTagHandle'></div>").appendTo(tagWindow);
-        $("<div class='jTagBottomRightHandle jTagHandle'></div>").appendTo(tagWindow);
-        $("<div class='jTagBottomMiddleHandle jTagHandle'></div>").appendTo(tagWindow);
+        $("<div class='jTagHandle'></div>").appendTo(tagWindow);
 
         return tagWindow;
 
@@ -140,7 +183,9 @@
       setupWrappers: function(image){
 
         var container = $("<div class='jTagImageContainer'></div>").css('width', image.width())
-                                                              .css('height', image.height());
+                                                                  .css('height', image.height())
+                                                                  .data("options", image.data('options'))
+                                                                  .data('jTagResizing', false);
 
          image.wrap(container);
 

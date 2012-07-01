@@ -13,65 +13,13 @@
 
 .jTagHandle{
 	position: absolute;
-	width: 5px;
-	height: 5px;
-	border: 1px solid black;
-	margin: -4px;
-	background-color: #CACACA;
-	opacity: 0.6;
-}
-
-.jTagTopLeftHandle, .jTagTopRightHandle, .jTagTopMiddleHandle{
-	top: 0;
-}
-
-.jTagTopRightHandle, .jTagBottomRightHandle, .jTagMiddleRightHandle{
-	right: 0;
-}
-
-.jTagBottomLeftHandle, .jTagBottomRightHandle, .jTagBottomMiddleHandle{
+	width: 16px;
+	height: 16px;
 	bottom: 0;
-}
-
-.jTagTopMiddleHandle, .jTagBottomMiddleHandle{
-	left: 50%;
-}
-
-.jTagMiddleRightHandle, .jTagMiddleLeftHandle{
-	top: 50%;
-}
-
-.jTagTopLeftHandle{
-	cursor: nw-resize;
-}
-
-.jTagTopRightHandle{
-	cursor: ne-resize;
-}
-
-.jTagTopMiddleHandle{
-	cursor: n-resize;
-}
-
-.jTagBottomLeftHandle{
-	cursor: sw-resize;
-}
-
-.jTagBottomRightHandle{
+	right: 0;
+	background-color: #CACACA;
+	background: url(../images/resize.png) no-repeat;
 	cursor: se-resize;
-}
-
-.jTagBottomMiddleHandle{
-	cursor: s-resize;
-}
-
-
-.jTagMiddleRightHandle{
-	cursor: e-resize;
-}
-
-.jTagMiddleLeftHandle{
-	cursor: w-resize;
 }
 
 
