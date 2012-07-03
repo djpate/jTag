@@ -30,11 +30,11 @@
                           .data('currentlyjTagging', true);
 
 
-            jTag.privateMethods.positionTagWindow(tagWindow, event);
+            jTag.privateMethods.positionTagWindow(tagWindow, event, 'center');
 
           } else if(image.data('currentlyjTagging') == true){
 
-            jTag.privateMethods.positionTagWindow(image.parent().find('.jTagTagWindow'), event);
+            jTag.privateMethods.positionTagWindow(image.parent().find('.jTagTagWindow'), event, 'center');
 
           }
 
@@ -53,7 +53,7 @@
             var tagWindow = $(this).data('tagWindow');
             
             if(tagWindow.data('mousedown') == true){
-              jTag.privateMethods.positionTagWindow(tagWindow, event);
+              jTag.privateMethods.positionTagWindow(tagWindow, event, 'relative');
             }
 
           }
@@ -123,8 +123,10 @@
         $(document).on('mousedown','.jTagTagWindow', function(event){
           
           event.preventDefault();
-          $(this).css('cursor', 'move');
-          $(this).data('mousedown', true)
+          $(this).css('cursor', 'move')
+                 .data('mousedown', true)
+                 .data('mouseOffsetX', event.pageX - $(this).data('offset').left - parseInt($(this).css('left'), 10))
+                 .data('mouseOffsetY', event.pageY - $(this).data('offset').top - parseInt($(this).css('top'), 10))
         
         });
 
@@ -200,10 +202,30 @@
 
       },
 
-      positionTagWindow: function(tagWindow, event){
+      positionTagWindow: function(tagWindow, event, type){
 
-        window_x = Math.min( Math.max( (event.pageX - tagWindow.data('offset').left) - tagWindow.outerWidth() / 2,0), (tagWindow.data('imageWidth') - tagWindow.outerWidth()));
-        window_y = Math.min( Math.max( (event.pageY - tagWindow.data('offset').top ) - tagWindow.outerHeight() / 2, 0), (tagWindow.data('imageHeight') - tagWindow.outerHeight()));
+        if(type == "center"){
+
+          window_x = event.pageX - tagWindow.data('offset').left - tagWindow.outerWidth() / 2
+          window_y = event.pageY - tagWindow.data('offset').top  - tagWindow.outerHeight() / 2
+
+        } else {
+
+          relative_mouse_to_image_x = event.pageX - tagWindow.data('offset').left;
+          relative_mouse_to_image_y = event.pageY - tagWindow.data('offset').top;
+
+          mouse_offset_x = relative_mouse_to_image_x - parseInt(tagWindow.css('left'), 10)
+
+          window_x = relative_mouse_to_image_x - tagWindow.data('mouseOffsetX')
+          window_y = relative_mouse_to_image_y - tagWindow.data('mouseOffsetY')
+
+        }
+
+        window_x = Math.min(window_x, tagWindow.data('imageWidth') - tagWindow.outerWidth())
+        window_y = Math.min(window_y, tagWindow.data('imageHeight') - tagWindow.outerHeight())
+
+        window_x = Math.max(window_x, 0)
+        window_y = Math.max(window_y, 0)
 
         image_position_x = tagWindow.data('imageWidth') - window_x - parseInt(tagWindow.css('border-left-width'), 10);
         image_position_y = tagWindow.data('imageHeight') - window_y - parseInt(tagWindow.css('border-top-width'), 10);
