@@ -20,7 +20,10 @@
 			$(document).ready(function(){
 				$("#img1").jTag({
 					maxWidth: 200,
-					maxHeight: 200
+					maxHeight: 200,
+					save: function(top, left, width, height, text){
+						console.log(top);
+					}
 				});
 			});
 			

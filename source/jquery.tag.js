@@ -23,11 +23,13 @@
           if(image.data('options').canTag && image.data('currentlyjTagging') == false ){
 
             image.data('currentlyjTagging', true);
-            image.css('opacity', 0.3);
 
             var tagWindow = jTag.domMethods.createTagWindow(image);
             image.parent().data('tagWindow', tagWindow)
-                          .data('currentlyjTagging', true);
+                          .data('currentlyjTagging', true)
+                          .addClass('tagging');
+
+            inputContainer = image.parent().find('.jTagInputcontainer input').focus();
 
 
             jTag.privateMethods.positionTagWindow(tagWindow, event, 'center');
@@ -97,8 +99,18 @@
 
             //handle image constraint
 
+            previous_height = tagWindow.height();
+
             tagWindow.css('width', desired_width +"px");
             tagWindow.css('height', desired_height +"px");
+
+            inputContainer = tagWindow.parent().find('.jTagInputcontainer');
+            inputContainer.css('top', parseInt(inputContainer.css('top'), 10) + (desired_height - previous_height));
+            input = inputContainer.find('input');
+            input.width(desired_width);
+
+
+
           }
 
         });
@@ -154,10 +166,46 @@
           $(this).parent().parent().data('jTagResizing', true);
        });
 
+      },
+
+      input: function(){
+
+        $(document).on('keypress', '.jTagInputcontainer input', function(event){
+          if(event.keyCode == 13){
+            
+            var container = $(this).parent().parent();
+            var tagWindow  = container.data('tagWindow');
+
+            var top = parseInt(tagWindow.css('top'), 10);
+            var left = parseInt(tagWindow.css('left'), 10);
+            var width = tagWindow.width();
+            var height = tagWindow.height();
+            var text = $(this).val();
+
+            //reset text 
+            $(this).val('');
+
+            jTag.domMethods.createTag(container, top, left, height, width, text);
+            
+            jTag.domMethods.closeTagWindow(container);
+            
+            //call callback is applicable
+            if(container.data('options').save != null){
+              container.data('options').save.call(top, left, width, height, text);
+            }
+          }
+        });
+
       }
     },
 
     domMethods: {
+
+      createInput: function(image){
+
+        $("<div class='jTagInputcontainer'><input type='text' /></div>").appendTo(image.parent());
+
+      },
 
       createTagWindow: function(image){
 
@@ -165,17 +213,38 @@
         var container = image.parent();
 
         var tagWindow = $("<div class='jTagTagWindow'></div>").css('width', image.data('options').defaultWidth)
-                                                                  .css('height', image.data('options').defaultHeight)
-                                                                  .css('background-image', 'url('+image.attr('src') +') ')
-                                                                  .data("offset", offset)
-                                                                  .data("imageWidth", image.width())
-                                                                  .data("imageHeight", image.height())
-                                                                  .appendTo(container);
+                                                              .css('height', image.data('options').defaultHeight)
+                                                              .css('background-image', 'url('+image.attr('src') +') ')
+                                                              .data("offset", offset)
+                                                              .data("imageWidth", image.width())
+                                                              .data("imageHeight", image.height())
+                                                              .appendTo(container);
 
         $("<div class='jTagHandle'></div>").appendTo(tagWindow);
 
         return tagWindow;
 
+      }, 
+
+      createTag: function(container, top, left, width, height, text){
+
+        var tag = $("<div class='jTagTag'></div>").css('top', top)
+                                        .css('left', left)
+                                        .width(width)
+                                        .height(height);
+
+        tag.appendTo(container);
+
+      },
+
+      closeTagWindow: function(container){
+        container.data('currentlyjTagging', false)
+                 .removeClass('tagging');
+
+        container.data('image').data('currentlyjTagging', false);
+
+        container.data('tagWindow').remove();
+        container.data('tagWindow', null);
       }
 
     },
@@ -184,10 +253,14 @@
 
       setupWrappers: function(image){
 
+        image.addClass("jTagImage");
+
         var container = $("<div class='jTagImageContainer'></div>").css('width', image.width())
                                                                   .css('height', image.height())
+                                                                  .data('image', image)
                                                                   .data("options", image.data('options'))
                                                                   .data('jTagResizing', false);
+
 
          image.wrap(container);
 
@@ -198,13 +271,18 @@
         jTag.listeners.imageListener(image);
         jTag.listeners.tagWindow();
         jTag.listeners.handles();
+        jTag.listeners.input();
         
 
       },
 
       positionTagWindow: function(tagWindow, event, type){
 
+        inputContainer = tagWindow.parent().find('.jTagInputcontainer');
+
         if(type == "center"){
+
+          inputContainer.find('input').width(tagWindow.width())
 
           window_x = event.pageX - tagWindow.data('offset').left - tagWindow.outerWidth() / 2
           window_y = event.pageY - tagWindow.data('offset').top  - tagWindow.outerHeight() / 2
@@ -233,6 +311,9 @@
         tagWindow.css('top', window_y)
                   .css('left', window_x)
                   .css('background-position',  image_position_x+"px " + image_position_y+"px");
+
+        inputContainer.css('top', window_y + tagWindow.outerHeight())
+                      .css('left', window_x);
 
       }
 
@@ -277,6 +358,7 @@
         image.data('currentlyjTagging', false);
 
         jTag.privateMethods.setupWrappers(image);
+        jTag.domMethods.createInput(image);
         jTag.privateMethods.setupListeners(image);
 
       });

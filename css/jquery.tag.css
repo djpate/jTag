@@ -6,10 +6,44 @@
 }
 
 .jTagTagWindow{
-	border:1px solid black;
+	border:3px solid #fff;
 	position: absolute;
 	z-index: 2;
+	-moz-box-shadow: 0 0 8px #CACACA;
+	-webkit-box-shadow: 0 0 8px#CACACA;
+	box-shadow: 0 0 8px #CACACA;
+	border-radius: 2px;
 }
+
+.jTagTag{
+	position: absolute;
+	border: 1px solid black;
+}
+
+.jTagInputcontainer {
+	position: absolute;
+	top: 0;
+	display: none;
+	margin-top: 10px;
+}
+
+.jTagInputcontainer input{
+	border:3px solid #fff;
+	-moz-box-shadow: 0 0 8px #CACACA;
+	-webkit-box-shadow: 0 0 8px#CACACA;
+	box-shadow: 0 0 8px #CACACA;
+	border-radius: 2px;
+}
+
+.jTagImageContainer.tagging .jTagInputcontainer{
+	display: block;
+}
+
+.jTagImageContainer.tagging .jTagImage{
+	opacity: 0.6;
+}
+
+
 
 .jTagHandle{
 	position: absolute;
